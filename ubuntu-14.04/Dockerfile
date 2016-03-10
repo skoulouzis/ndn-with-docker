@@ -33,3 +33,10 @@ RUN cd NFD &&\
     ./waf &&\
     ./waf install &&\
     cp build/nfd.conf.sample /usr/local/etc/ndn/nfd.conf
+
+RUN git clone --depth 1 https://github.com/pedosb/Consumer-Producer-API.git
+RUN cd Consumer-Producer-API &&\
+    ./waf configure &&\
+    ./waf &&\
+    ./waf install
+RUN ldconfig
