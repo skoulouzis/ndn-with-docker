@@ -1,4 +1,4 @@
-FROM nfd-16.04:latest
+FROM registry.lasseufpa.org/nfd-16.04:0.5.0-1
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -24,6 +24,7 @@ RUN apt-get -y update &&\
         libprotobuf9v5 \
         libsqlite3-0 \
         netcat \
+        netcat-openbsd \
     " &&\
     apt-get -y install --no-install-recommends \
         $BUILD_DEPS $RUNTIME_DEPS &&\
@@ -39,10 +40,6 @@ RUN apt-get -y update &&\
     apt-get remove -y .*-dev &&\
     apt-get autoremove -y &&\
     rm -rf /var/lib/apt/lists /tmp/*
-
-# TODO: move up
-RUN apt-get update &&\
-    apt-get install -y netcat-openbsd
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
