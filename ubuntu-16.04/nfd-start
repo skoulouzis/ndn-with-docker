@@ -62,9 +62,9 @@ if [ -f /usr/local/etc/ndn/nfd-init.sh ]; then
   . /usr/local/etc/ndn/nfd-init.sh
 fi
 
-if [ -f /usr/local/etc/ndn/autoconfig.conf ]; then
+if [ -f /etc/ndn/autoconfig.conf ]; then
   sleep 2 # post-start is executed just after nfd process starts, but there is no guarantee
-  /usr/local/bin/ndn-autoconfig -d -c "/usr/local/etc/ndn/autoconfig.conf" &
+  /usr/bin/ndn-autoconfig -d -c "/etc/ndn/autoconfig.conf" &
 fi
 
 if $FOREGROUND
