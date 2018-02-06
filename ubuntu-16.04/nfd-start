@@ -47,7 +47,13 @@ then
   ndnsec-keygen /localhost/operator | ndnsec-install-cert -
 fi
 
-/usr/local/bin/nfd &
+if ! sudo true
+then
+  echo 'Unable to obtain superuser privilege'
+  exit 2
+fi
+
+sudo /usr/bin/nfd &
 NFD_PID=$!
 
 if [ -f /usr/local/etc/ndn/nfd-init.sh ]; then
