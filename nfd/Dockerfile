@@ -11,6 +11,12 @@ RUN ldconfig
 
 RUN cp /usr/local/etc/ndn/nfd.conf.sample /usr/local/etc/ndn/nfd.conf
 RUN sed -ie "s/default_level .*/default_level DEBUG/" /usr/local/etc/ndn/nfd.conf
+
+RUN ndnsec-keygen /`whoami` | ndnsec-install-cert -
+RUN mkdir -p /usr/local/etc/ndn/keys
+RUN ndnsec-cert-dump -i /`whoami` > default.ndncert
+RUN mv default.ndncert /usr/local/etc/ndn/keys/default.ndncert
+
 CMD nfd
 # CMD tail -f /dev/null
 
