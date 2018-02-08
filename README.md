@@ -1,2 +1,2 @@
 # ndn-with-docker
-Setup for running NFD inside Docker
+Setup for running NDN inside Docker
