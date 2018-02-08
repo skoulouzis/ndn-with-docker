@@ -18,4 +18,6 @@ RUN ./waf
 RUN ./waf install
 RUN ldconfig
 
+WORKDIR /
+
 
