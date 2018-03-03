@@ -17,6 +17,12 @@ RUN mkdir -p /usr/local/etc/ndn/keys
 RUN ndnsec-cert-dump -i /`whoami` > default.ndncert
 RUN mv default.ndncert /usr/local/etc/ndn/keys/default.ndncert
 
-CMD nfd
+RUN apt-get -y install screen 
+
+WORKDIR /root
+COPY script.sh .
+RUN chmod +x script.sh 
+
+CMD screen -dm -L sh -c 'nfd'
 # CMD tail -f /dev/null
 

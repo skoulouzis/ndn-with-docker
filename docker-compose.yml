@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+    producer:
+        image: nfd
+        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 2 && /ndn-cxx/build/examples/producer"
+        build:
+            context: ./nfd
+            dockerfile: Dockerfile   
+            
+    consumer_1:
+        image: nfd
+        environment:
+            PRODUCER: producer
+        depends_on:
+            - producer
+        build:
+            context: ./nfd
+            dockerfile: Dockerfile  
+        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 2 && nfdc face create udp://producer && nfdc route add /example udp://producer && for i in {1..5}; do sleep 0.5 && /ndn-cxx/build/examples/consumer; done"            
+            
+    consumer_2:
+        image: nfd
+        environment:
+            PRODUCER: producer
+        depends_on:
+            - producer
+        build:
+            context: ./nfd
+            dockerfile: Dockerfile  
+        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 2 && nfdc face create udp://producer && nfdc route add /example udp://producer && for i in {1..10}; do sleep 0.2 && /ndn-cxx/build/examples/consumer; done "              
+
+
+
