@@ -1,4 +1,5 @@
-FROM nfd
+FROM alogo53/nfd:0.6
+
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -13,6 +14,6 @@ RUN ldconfig
 
 RUN cp /usr/local/etc/ndn/repo-ng.conf.sample /usr/local/etc/ndn/repo-ng.conf
 RUN mkdir -p /var/db/ndn-repo-ng
-CMD ndn-repo-ng
+CMD screen -dm -L sh -c 'nfd' && sleep 2 && screen -dm -L sh -c 'ndn-repo-ng' && tail -f screenlog.0
 # CMD tail -f /dev/null
 

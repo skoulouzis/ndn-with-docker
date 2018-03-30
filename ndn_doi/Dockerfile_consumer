@@ -1,0 +1,11 @@
+FROM ndn-tools 
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get -y install inotify-tools wget 
+
+WORKDIR /root
+
+ADD getData.sh /root
+
+RUN chmod +x /root/getData.sh

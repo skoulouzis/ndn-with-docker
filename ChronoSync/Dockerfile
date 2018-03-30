@@ -1,4 +1,4 @@
-FROM nfd
+FROM alogo53/nfd:0.6
 
 ENV DEBIAN_FRONTEND=noninteractive
 

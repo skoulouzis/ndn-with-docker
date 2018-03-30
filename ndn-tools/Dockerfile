@@ -1,4 +1,5 @@
-FROM nfd
+# FROM alogo53/ndn-cxx:0.6
+FROM alogo53/nfd:0.6
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -11,6 +12,6 @@ RUN ./waf
 RUN ./waf install
 RUN ldconfig
 
-
+CMD screen -dm -L sh -c 'nfd' && sleep 2 && tail -f screenlog.0
 # CMD tail -f /dev/null
 

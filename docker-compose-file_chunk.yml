@@ -1,0 +1,24 @@
+version: '3.3'
+
+services:
+    producer:
+        image: ndn-producer
+        environment:
+            CONSUMER: consumer_1        
+        build:
+            context: ./ndn_doi
+            dockerfile: Dockerfile_producer
+            
+    consumer_1:
+        image: ndn-consumer
+        environment:
+            PRODUCER: producer
+        depends_on:
+            - producer
+        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 4 && nfdc face create udp://producer && nfdc route add /example udp://producer && ./getData.sh"
+        build:
+            context: ./ndn_doi
+            dockerfile: Dockerfile_consumer
+
+
+
