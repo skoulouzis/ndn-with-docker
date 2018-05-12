@@ -2,10 +2,18 @@ FROM ndn-tools
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get -y install inotify-tools wget 
+RUN apt-get -y install inotify-tools wget bc
 
 WORKDIR /root
 
-ADD getData.sh /root
+ADD getDataset.sh /root
+RUN chmod +x /root/getDataset.sh
 
-RUN chmod +x /root/getData.sh
+ADD csv2json.sh /root
+RUN chmod +x /root/csv2json.sh
+
+ADD run.sh /root
+RUN chmod +x /root/run.sh
+
+ADD process.sh /root/
+RUN chmod +x /root/process.sh

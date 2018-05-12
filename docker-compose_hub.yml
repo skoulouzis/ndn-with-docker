@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+    gateway:
+        image: ndn-tools
+        build:
+            context: ./ndn-tools
+            dockerfile: Dockerfile
+        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 1 && tail -f screenlog.0"
+            
+    node1:
+        image: ndn-tools       
+        build:
+            context: ./ndn-tools
+            dockerfile: Dockerfile          
+        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 1 && nfdc face create udp://gateway && nfdc route add / udp://gateway && ndnpingserver /example/dataset"
+            
+    node2:
+        image: ndn-tools       
+        build:
+            context: ./ndn-tools
+            dockerfile: Dockerfile   
+        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 8 && nfdc face create udp://gateway && nfdc route add / udp://gateway && ndnping /example/dataset"       
+
+
+

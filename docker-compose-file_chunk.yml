@@ -8,17 +8,23 @@ services:
         build:
             context: ./ndn_doi
             dockerfile: Dockerfile_producer
+        deploy:
+            restart_policy:
+                condition: none              
             
-    consumer_1:
+    consumer:
         image: ndn-consumer
         environment:
             PRODUCER: producer
         depends_on:
             - producer
-        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 4 && nfdc face create udp://producer && nfdc route add /example udp://producer && ./getData.sh"
+        command: bash -c "screen -dm -L sh -c 'nfd' && sleep 3 && nfdc face create udp://producer &> /dev/null && nfdc route add /example udp://producer &> /dev/null && ./run.sh"
         build:
             context: ./ndn_doi
             dockerfile: Dockerfile_consumer
+        deploy:
+            restart_policy:
+                condition: none
 
 
 

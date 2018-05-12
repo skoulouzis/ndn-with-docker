@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+    consumer:
+        image: ndn-consumer
+        command: bash -c "wget ftp://ftp.ifremer.fr/ifremer/argo/argo_bio-profile_index.txt"
+        build:
+            context: ./ndn_doi
+            dockerfile: Dockerfile_consumer
+        deploy:
+            restart_policy:
+                condition: none

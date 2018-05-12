@@ -8,11 +8,12 @@ WORKDIR /root
 
 CMD screen -dm -L sh -c 'nfd' && \
     screen -ls && sleep 2 && \
+    start_time="$(date -u +%s.%N)" && \
     while inotifywait -e modify /root/screenlog.0; do DATA_SET=`tail -10 /root/screenlog.0 | grep '\[Forwarder\] onContentStoreMiss interest=/example' | awk -F"=" '{print $2}'` && \
     tail -100 /root/screenlog.0 | grep '\[Forwarder\] onContentStoreMiss interest=/example' && \
     echo $DATA_SET && \
     wget ftp://ftp.ifremer.fr/ifremer/argo/argo_bio-profile_index.txt && \
     ndnputchunks ndn:/example/dataset/argo_bio-profile_index/%FD%00%00%01Qc%CF%17v < argo_bio-profile_index.txt; done && \
-    tail -f /root/screenlog.0 
+    tail -f /root/screenlog.0
 
 
